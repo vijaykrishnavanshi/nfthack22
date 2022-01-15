@@ -1,8 +1,9 @@
 <p align='center'>
-    <img src=""/>
+    <img src="./img/logo_3_2.png"/>
 </p>
 
 NFTpay
+
 ###
 
 Your own hosted invoices - represented as NFT's.
@@ -20,13 +21,13 @@ REACT_APP_NFT_KEY={YOUR_NFT_STORAGE_KEY}
 
 `yarn && yarn start`
 
-### 
-
+###
 
 ### Deployment
-<!-- https://surge.sh/ -->
-* nftpay.surge.sh 
 
+<!-- https://surge.sh/ -->
+
+- nftpay.surge.sh
 
 <!--
 
@@ -46,9 +47,7 @@ NFTpay
 
 -->
 
-
 ### Useful links
-* https://showcase.ethglobal.com/nfthack2022/prizes
-* https://stripe.com/invoicing
 
-
+- https://showcase.ethglobal.com/nfthack2022/prizes
+- https://stripe.com/invoicing
