@@ -1,0 +1,19 @@
+@import "~antd/dist/antd.css";
+
+/* .App {
+} */
+
+.container {
+  text-align: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  margin-top: 60px;
+}
+
+.header-logo {
+  height: 40px;
+}
+
+.ant-layout-header {
+  background: white;
+}
