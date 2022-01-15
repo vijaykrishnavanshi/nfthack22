@@ -8,6 +8,6 @@ export const APP_NAME = "NFTpay";
 export const APP_DESC = "NFT-backed invoices";
 
 export const CHAIN_OPTIONS = {
-  1: "Ethereum",
-  42: "Kovan",
+  1: { name: "Ethereum", url: "https://etherscan.io/tx/" },
+  42: { name: "Kovan", url: "https://kovan.etherscan.io/tx/" },
 };

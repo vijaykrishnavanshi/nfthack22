@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button, Input, Select, Table } from "antd";
-import { CHAIN_OPTIONS } from "../util/constants";
+import { APP_NAME, CHAIN_OPTIONS } from "../util/constants";
 import { getTransactions } from "../util/covalent";
 import { col } from "../util";
 
 const { Option } = Select;
 
 const COLUMNS = [
-  col("tx_hash"),
-  col("from_address"),
+  //   col("tx_hash"),
+  //   col("from_address"),
   col("to_address"),
   col("value"),
   col("gas_spent"),
 ];
 
 function History(props) {
-  const [address, setAddress] = useState();
+  const [address, setAddress] = useState(
+    "0x73bceb1cd57c711feac4224d062b0f6ff338501e"
+  );
   const [chainId, setChainId] = useState(1);
   const [loading, setLoading] = useState();
   const [data, setData] = useState();
@@ -30,7 +32,7 @@ function History(props) {
     setLoading(true);
     try {
       const res = await getTransactions(chainId, address);
-      setData(res.data.items);
+      setData(res.data.data.items);
     } catch (e) {
       console.error(e);
       alert("error getting paydata" + e);
@@ -41,6 +43,10 @@ function History(props) {
 
   return (
     <div>
+      <p>
+        This page can be used to lookup {APP_NAME} transactions against a given
+        address.
+      </p>
       <Input
         value={address}
         onChange={(e) => setAddress(e.target.value)}
@@ -56,7 +62,7 @@ function History(props) {
         {Object.keys(CHAIN_OPTIONS).map((cId, i) => {
           return (
             <Option key={i} value={cId}>
-              {CHAIN_OPTIONS[cId]}
+              {CHAIN_OPTIONS[cId].name}
             </Option>
           );
         })}
@@ -69,7 +75,28 @@ function History(props) {
       <hr />
       {data && (
         <div>
-          <Table dataSource={data} columns={COLUMNS} />;
+          <h1>Transaction History</h1>
+          <Table
+            dataSource={data}
+            columns={COLUMNS}
+            className="pointer"
+            onRow={(record, rowIndex) => {
+              return {
+                onClick: (event) => {
+                  console.log("event", event.target.value);
+                  window.open(
+                    `${CHAIN_OPTIONS[chainId].url}${record.tx_hash}`,
+                    "_blank"
+                  );
+                }, // click row
+                onDoubleClick: (event) => {}, // double click row
+                onContextMenu: (event) => {}, // right button click row
+                onMouseEnter: (event) => {}, // mouse enter row
+                onMouseLeave: (event) => {}, // mouse leave row
+              };
+            }}
+          />
+          ;
         </div>
       )}
     </div>
