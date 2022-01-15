@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import { Spin } from "antd";
 import Invoice from "./Invoice/Invoice";
 import { getInvoice, payInvoice } from "../util/invoice";
+import { useParams } from "react-router-dom";
 
-function Pay({ payId }) {
+function Pay({ match }) {
+  const { payId } = useParams();
   const [data, setData] = useState({
     url: "google.com",
     units: "USDC",
@@ -20,6 +22,7 @@ function Pay({ payId }) {
   const [result, setResult] = useState();
 
   const fetchData = async () => {
+    console.log("fetch", payId);
     if (!payId) {
       return;
     }
@@ -68,7 +71,7 @@ function Pay({ payId }) {
 
   return (
     <div>
-      <Invoice {...data} pay={pay} />
+      <Invoice {...data} pay={pay} payId={payId}/>
     </div>
   );
 }

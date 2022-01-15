@@ -23,7 +23,7 @@ function CreateInvoice(props) {
   };
 
   const isValid = (data) => {
-    return data.title && data.description && data.itemName && data.itemCCost;
+    return data.title && data.description && data.itemName && data.itemCost;
   };
   const isValidData = isValid(data);
 
@@ -34,8 +34,6 @@ function CreateInvoice(props) {
     }
     setError(undefined);
     setLoading(true);
-
-    const instructions = "Complete the associated tasks to earn a reward.";
 
     const body = {
       title: data.title,
@@ -50,14 +48,7 @@ function CreateInvoice(props) {
     };
 
     try {
-      const res = await createInvoice(
-        data.invoiceName,
-        `${data.category} for ${data.url}`,
-        instructions,
-        data.category,
-        [data], // could be a longer list of tasks.,
-        1 // default reward.
-      );
+      const res = await createInvoice(body);
       setResult(res);
       try {
         // await postInvoice(res.invoice);

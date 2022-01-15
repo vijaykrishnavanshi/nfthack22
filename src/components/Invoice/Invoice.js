@@ -1,3 +1,4 @@
+import { Button } from "antd";
 import React from "react";
 import logo from "../../assets/logo.png";
 import { APP_NAME } from "../../util/constants";
@@ -14,25 +15,31 @@ function Invoice({
   name,
   description,
   units,
-  url,
+  callbackUrl,
   ref,
-  items,
+  pay,
   imgData,
-  id: idNumber,
+  logoUrl,
+  payId,
+  properties,
 }) {
-  const invoiceNumber = idNumber || DEMO_NUMBER;
+  const invoiceNumber = payId || DEMO_NUMBER;
+
+  const items = (properties || {}).items || [];
 
   const total = items
-    .map((item) => item.price)
+    .map((item) => item.cost)
     .reduce(function (a, b) {
       return a + b;
     }, 0);
 
+  const currency = units || "Eth";
+
   return (
     <div class="invoice-box" ref={ref}>
-      <p>
+      {/* <p>
         <b>Transaction Complete! Please print this page.</b>
-      </p>
+      </p> */}
       <table cellpadding="0" cellspacing="0">
         <tr class="top">
           <td colspan="2">
@@ -40,7 +47,7 @@ function Invoice({
               <tr>
                 <td class="title">
                   <img
-                    src={logo}
+                    src={logoUrl || logo}
                     style={{ width: "100%", maxWidth: IMG_WIDTH }}
                   />
                 </td>
@@ -65,11 +72,13 @@ function Invoice({
             <table>
               <tr>
                 <td>
-                  {APP_NAME}, Inc.
+                  Fulfilled by {APP_NAME}, Inc.
                   <br />
-                  12345 Sunny Road
+                  {name}
+                  {/* 12345 Sunny Road */}
                   <br />
-                  Sunnyville, CA 12345
+                  {description}
+                  {/* Sunnyville, CA 12345 */}
                 </td>
 
                 <td>
@@ -91,10 +100,11 @@ function Invoice({
         </tr>
 
         <tr class="details">
-          <td>{units}</td>
+          <td>{currency}</td>
 
           <td>
-            {total} {units}
+            {/* {payId} */}
+            {total} {currency}
           </td>
         </tr>
 
@@ -104,12 +114,12 @@ function Invoice({
           <td>Price</td>
         </tr>
 
-        {items.map(({ name: itemName, price }, i) => (
+        {items.map(({ name: itemName, cost }, i) => (
           <tr class="item" key={i}>
             <td>{itemName}</td>
 
             <td>
-              {price} {units || "Eth"}
+              {cost} {}
             </td>
           </tr>
         ))}
@@ -118,13 +128,23 @@ function Invoice({
           <td>
             {imgData && <img className="img-invoice" src={imgData} />}
 
-            <a href={url} target="_blank">
+            {/* <a href={url} target="_blank">
               View NFT
-            </a>
+            </a> */}
+            {pay && (
+              <Button
+                type="primary"
+                size="large"
+                className="standard-button"
+                onClick={pay}
+              >
+                Complete Payment
+              </Button>
+            )}
           </td>
 
           <td>
-            Total: {total} {units}
+            Total: {total} {currency}
           </td>
         </tr>
       </table>

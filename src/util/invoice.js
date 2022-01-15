@@ -14,21 +14,18 @@ export const EXAMPLE_FORM = {
   units: "USDC",
 };
 
-export const createInvoice = async ({
-  title,
-  destination,
-  callbackUrl,
-  items,
-  description,
-  cost,
-}) => {
-  const fileData = new File();
+export const createInvoice = async (payload) => {
+  const { title, destination, callbackUrl, items, description, cost } = payload;
   const properties = {
     destination,
     callbackUrl,
     items,
     cost,
   };
+  const st = JSON.stringify(payload);
+  const blob = new Blob([st], { type: "application/json" });
+  const fileData = new File([blob], "invoice.json");
+
   const res = await mintNFT(title, description, fileData, properties);
 
   return res;
