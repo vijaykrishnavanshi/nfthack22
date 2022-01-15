@@ -10,8 +10,23 @@ const DEMO_NUMBER =
   Date.now().toString(36) + Math.random().toString(36).substring(2);
 
 // github.com/sparksuite/simple-html-invoice-template
-function Invoice({ amount, url, ref, items, imgData, id: idNumber }) {
+function Invoice({
+  name,
+  description,
+  units,
+  url,
+  ref,
+  items,
+  imgData,
+  id: idNumber,
+}) {
   const invoiceNumber = idNumber || DEMO_NUMBER;
+
+  const total = items
+    .map((item) => item.price)
+    .reduce(function (a, b) {
+      return a + b;
+    }, 0);
 
   return (
     <div class="invoice-box" ref={ref}>
@@ -76,9 +91,11 @@ function Invoice({ amount, url, ref, items, imgData, id: idNumber }) {
         </tr>
 
         <tr class="details">
-          <td>USDC</td>
+          <td>{units}</td>
 
-          <td>{amount} USDC</td>
+          <td>
+            {total} {units}
+          </td>
         </tr>
 
         <tr class="heading">
@@ -87,9 +104,9 @@ function Invoice({ amount, url, ref, items, imgData, id: idNumber }) {
           <td>Price</td>
         </tr>
 
-        {items.map(({ name, price, units }, i) => (
+        {items.map(({ name: itemName, price }, i) => (
           <tr class="item" key={i}>
-            <td>{name}</td>
+            <td>{itemName}</td>
 
             <td>
               {price} {units || "Eth"}
@@ -106,7 +123,9 @@ function Invoice({ amount, url, ref, items, imgData, id: idNumber }) {
             </a>
           </td>
 
-          <td>Total: {amount} USDC</td>
+          <td>
+            Total: {total} {units}
+          </td>
         </tr>
       </table>
     </div>

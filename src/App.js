@@ -1,16 +1,18 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./components/Home";
 import Pay from "./components/Pay";
-import Create from "./components/Create";
+import CreateInvoice from "./components/CreateInvoice";
 import { Layout, Menu, Breadcrumb } from "antd";
 import { APP_NAME } from "./util/constants";
 import logo from "./assets/logo.png";
 
 import "./App.css";
+import History from "./components/History";
 
 const { Header, Content, Footer } = Layout;
 
 function App() {
+  const navigate = useNavigate();
   const path = window.location.pathname;
 
   const isPayment = path.startsWith("/pay");
@@ -21,12 +23,23 @@ function App() {
         {!isPayment && (
           <Header>
             {/* <div className="logo" /> */}
-            <img src={logo} className="header-logo" />
+
             <Menu
               // theme="dark"
               mode="horizontal"
-              defaultSelectedKeys={["2"]}
-            ></Menu>
+              defaultSelectedKeys={[]}
+            >
+              <Menu.Item key={0}>
+                <img
+                  src={logo}
+                  className="header-logo pointer"
+                  onClick={() => navigate("/")}
+                />
+              </Menu.Item>
+              <Menu.Item key={1} onClick={() => navigate("/history")}>
+                History
+              </Menu.Item>
+            </Menu>
           </Header>
         )}
         <Content style={{ padding: "0 50px" }}>
@@ -34,7 +47,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/pay/:payId" element={<Pay />} />
-              <Route path="/create" element={<Create />} />
+              <Route path="/create" element={<CreateInvoice />} />
+              <Route path="/history" element={<History />} />
             </Routes>
           </div>
         </Content>

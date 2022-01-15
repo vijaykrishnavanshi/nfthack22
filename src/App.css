@@ -3,11 +3,37 @@
 /* .App {
 } */
 
+.hero-section {
+  margin-top: 150px;
+}
+
 .container {
-  text-align: center;
   max-width: 1000px;
   margin: 0 auto;
+  min-height: 80vh;
   margin-top: 60px;
+}
+
+.hero-slogan {
+  font-size: 28px;
+  font-weight: 500;
+  margin-top: 150px;
+  margin-left: 50px;
+}
+
+.vertical-margin,
+.standard-button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.ant-input,
+input {
+  max-width: 600px;
 }
 
 .header-logo {

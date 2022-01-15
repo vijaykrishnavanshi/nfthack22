@@ -4,6 +4,7 @@ import { Row, Col, Button } from "antd";
 import logo from "../assets/logo_3_2.png";
 import ReactRotatingText from "react-rotating-text";
 import { useNavigate } from "react-router-dom";
+import { APP_DESC } from "../util/constants";
 
 function Home(props) {
   const navigate = useNavigate();
@@ -12,20 +13,24 @@ function Home(props) {
     navigate("/create");
   };
   return (
-    <div>
+    <div className="hero-section">
       <Row>
         <Col span={12}>
-          <p>NFT-backed invoices for</p>
+          <div className="hero-slogan">
+            <p>
+              {APP_DESC} for
+              <br />
+              <ReactRotatingText
+                items={["businesses", "consultants", "everyone"]}
+              />
+              .
+            </p>
+            {/* <p>powered by Circle.</p> */}
 
-          <p>
-            <ReactRotatingText items={["first", "second", "third"]} />.
-          </p>
-
-          <p>powered by Circle.</p>
-
-          <Button type="primary" size="large" onClick={goToCreate}>
-            Create
-          </Button>
+            <Button type="primary" size="large" onClick={goToCreate}>
+              Create invoice
+            </Button>
+          </div>
         </Col>
         <Col span={12}>
           <img src={logo} className="hero-image" />
