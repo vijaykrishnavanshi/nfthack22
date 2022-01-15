@@ -7,13 +7,13 @@ import TextArea from "antd/lib/input/TextArea";
 //   EXAMPLE_TASK,
 //   invoiceUrl,
 // } from "../util/invoice";
-import { ipfsUrl, isValidHttpUrl } from "../util";
-import { createInvoice, EXAMPLE_PAYLOAD } from "../util/invoice";
+import { ipfsUrl } from "../util";
+import { createInvoice, EXAMPLE_FORM } from "../util/invoice";
 
 const { Step } = Steps;
 
 function CreateInvoice(props) {
-  const [data, setData] = useState({ ...EXAMPLE_PAYLOAD });
+  const [data, setData] = useState({ ...EXAMPLE_FORM });
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState();
@@ -23,7 +23,7 @@ function CreateInvoice(props) {
   };
 
   const isValid = (data) => {
-    return data.invoiceName && data.title && data.description;
+    return data.title && data.description && data.itemName && data.itemCCost;
   };
   const isValidData = isValid(data);
 
@@ -36,6 +36,18 @@ function CreateInvoice(props) {
     setLoading(true);
 
     const instructions = "Complete the associated tasks to earn a reward.";
+
+    const body = {
+      title: data.title,
+      items: [
+        {
+          name: data.itemName,
+          cost: data.itemCost,
+        },
+      ],
+      description: data.description,
+      units: "USDC",
+    };
 
     try {
       const res = await createInvoice(
@@ -80,19 +92,9 @@ function CreateInvoice(props) {
             <Input
               placeholder="Title of the invoice"
               value={data.invoiceName}
-              prefix="Invoice:"
+              prefix="Title:"
               onChange={(e) => updateData("invoiceName", e.target.value)}
             />
-
-            {/* TODO: add configurable amount of items */}
-            <h3 className="vertical-margin">General information:</h3>
-            <Input
-              placeholder="Title of the invoice"
-              value={data.title}
-              prefix="Invoice title:"
-              onChange={(e) => updateData("title", e.target.value)}
-            />
-
             <TextArea
               aria-label="Description"
               onChange={(e) => updateData("description", e.target.value)}
@@ -100,9 +102,37 @@ function CreateInvoice(props) {
               prefix="Description"
               value={data.description}
             />
+
+            {/* TODO: add configurable amount of items */}
+            <h3 className="vertical-margin">General information:</h3>
             <Input
+              placeholder="Saas Subscription (1 year)"
+              value={data.itemName}
+              prefix="Line item:"
+              onChange={(e) => updateData("itemName", e.target.value)}
+            />
+
+            <Input
+              placeholder="1000"
+              type="number"
+              value={data.itemCost}
+              prefix="Item cost:"
+              onChange={(e) => updateData("itemCost", e.target.value)}
+            />
+
+            <Input
+              placeholder="USDC"
+              value={data.units}
+              prefix="Currency: "
+              onChange={(e) => updateData("units", e.target.value)}
+            />
+
+            <br />
+
+            <Input
+              aria-label="callback-url"
               value={data.url}
-              placeholder="Location where the user should be returned"
+              placeholder="Location where the user should be returned (optional)"
               prefix="Callback url:"
               onChange={(e) => updateData("url", e.target.value)}
             />
@@ -151,8 +181,8 @@ function CreateInvoice(props) {
                 description="Requires authorizing a create invoice operation."
               />
               <Step
-                title="Wait for feedback"
-                description="Your invoice will be live for others to complete."
+                title="Wait for payment"
+                description="Your invoice will be live for others to view and submit payment."
               />
             </Steps>
           </div>

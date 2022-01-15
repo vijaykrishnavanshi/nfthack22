@@ -1,4 +1,4 @@
-export const ipfsUrl = (cid) => `/${cid}`; // TODO
+export const ipfsUrl = (cid) => `https://ipfs.io/ipfs/${cid}`;
 
 export function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);

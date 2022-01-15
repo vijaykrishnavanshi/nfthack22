@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./components/Home";
 import Pay from "./components/Pay";
@@ -12,6 +14,8 @@ import History from "./components/History";
 const { Header, Content, Footer } = Layout;
 
 function App() {
+  const [account, setAccount] = useState();
+
   const navigate = useNavigate();
   const path = window.location.pathname;
 

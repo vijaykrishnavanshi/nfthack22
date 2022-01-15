@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Spin } from "antd";
 import Invoice from "./Invoice/Invoice";
-import { payInvoice } from "../util/invoice";
+import { getInvoice, payInvoice } from "../util/invoice";
 
 function Pay({ payId }) {
   const [data, setData] = useState({
@@ -26,7 +26,8 @@ function Pay({ payId }) {
 
     setLoading(true);
     try {
-      const res = setData(res.data);
+      const res = await getInvoice(payId);
+      setData(res.data);
     } catch (e) {
       console.error(e);
       alert("error getting paydata" + e);
