@@ -1,4 +1,3 @@
-import { File } from "https://cdn.jsdelivr.net/npm/nft.storage/dist/bundle.esm.min.js";
 import { createJsonFile, ipfsUrl } from ".";
 import { mintNFT } from "./stor";
 import axios from "axios";

@@ -1,4 +1,4 @@
-import { NFTStorage } from "https://cdn.jsdelivr.net/npm/nft.storage/dist/bundle.esm.min.js";
+import { NFTStorage } from "nft.storage/dist/bundle.esm.min.js";
 import { NFT_KEY } from "./constants";
 
 const endpoint = "https://api.nft.storage"; // the default
@@ -24,5 +24,3 @@ export async function mintNFT(name, description, fileData, properties) {
   );
   return metadata;
 }
-
-

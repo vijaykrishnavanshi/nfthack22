@@ -7,7 +7,7 @@ import TextArea from "antd/lib/input/TextArea";
 //   EXAMPLE_TASK,
 //   invoiceUrl,
 // } from "../util/invoice";
-import { ipfsUrl } from "../util";
+import { invoiceUrl, ipfsUrl } from "../util";
 import { createInvoice, EXAMPLE_FORM } from "../util/invoice";
 
 const { Step } = Steps;
@@ -147,6 +147,7 @@ function CreateInvoice(props) {
               onChange={(e) => updateData("url", e.target.value)}
             />
             <br />
+            <br />
 
             <Radio.Group
               onChange={(e) => updateData("recurring", e.target.value)}
@@ -181,8 +182,13 @@ function CreateInvoice(props) {
                   href={ipfsUrl(result.ipnft, "metadata.json")}
                   target="_blank"
                 >
-                  View invoice
+                  View metadata
                 </a>
+                <br />
+                <a href={invoiceUrl(result.ipnft)} target="_blank">
+                  Share payment URL
+                </a>
+
                 {/* <div>{JSON.stringify(result, null, "\t")}</div> */}
               </div>
             )}
