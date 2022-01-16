@@ -88,8 +88,10 @@ NFTpay.
 
 -->
 
-### Useful links
+### Useful links/references
 
+- https://app.superfluid.finance/
 - https://app.unlock-protocol.com/dashboard
 - https://showcase.ethglobal.com/nfthack2022/prizes
 - https://stripe.com/invoicing
+- https://www.billentis.com/einvoicing_ebilling_market_overview_2020.pdf
