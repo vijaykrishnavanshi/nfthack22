@@ -24,3 +24,5 @@ export async function mintNFT(name, description, fileData, properties) {
   );
   return metadata;
 }
+
+

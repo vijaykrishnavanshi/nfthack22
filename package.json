@@ -10,6 +10,7 @@
     "axios": "^0.24.0",
     "nft.storage": "^5.2.0",
     "react": "^17.0.2",
+    "react-credit-cards": "^0.8.3",
     "react-dom": "^17.0.2",
     "react-rotating-text": "^1.4.1",
     "react-router-dom": "6",

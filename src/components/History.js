@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Button, Input, Select, Table } from "antd";
 import { APP_NAME, CHAIN_OPTIONS } from "../util/constants";
 import { getTransactions } from "../util/covalent";
-import { col } from "../util";
+import { capitalize, col } from "../util";
 
 const { Option } = Select;
 
@@ -62,7 +62,7 @@ function History(props) {
         {Object.keys(CHAIN_OPTIONS).map((cId, i) => {
           return (
             <Option key={i} value={cId}>
-              {CHAIN_OPTIONS[cId].name}
+              {capitalize(CHAIN_OPTIONS[cId].name)}
             </Option>
           );
         })}

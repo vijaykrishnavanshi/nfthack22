@@ -23,7 +23,14 @@ function CreateInvoice(props) {
   };
 
   const isValid = (data) => {
-    return data.title && data.description && data.itemName && data.itemCost;
+    return (
+      data.title &&
+      data.description &&
+      data.itemName &&
+      data.itemCost &&
+      data.destination &&
+      data.units
+    );
   };
   const isValidData = isValid(data);
 
@@ -44,7 +51,10 @@ function CreateInvoice(props) {
         },
       ],
       description: data.description,
-      units: "USDC",
+      units: data.units,
+      createdAt: new Date().getTime(),
+      destination: data.destination,
+      url: data.url,
     };
 
     try {
@@ -118,6 +128,14 @@ function CreateInvoice(props) {
               onChange={(e) => updateData("units", e.target.value)}
             />
 
+            <Input
+              prefix="Payment address:"
+              aria-label="Destination address"
+              onChange={(e) => updateData("destination", e.target.value)}
+              placeholder="Address"
+              value={data.destination}
+            />
+
             <br />
 
             <Input
@@ -149,7 +167,10 @@ function CreateInvoice(props) {
             {result && (
               <div>
                 <div className="success-text">Created invoice!</div>
-                <a href={ipfsUrl(result.invoice.id)} target="_blank">
+                <a
+                  href={ipfsUrl(result.ipnft, "metadata.json")}
+                  target="_blank"
+                >
                   View invoice
                 </a>
                 {/* <div>{JSON.stringify(result, null, "\t")}</div> */}

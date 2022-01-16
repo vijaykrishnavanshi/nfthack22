@@ -1,9 +1,12 @@
-import { Button } from "antd";
-import React from "react";
+import { Button, Tooltip, Modal, Input } from "antd";
+import React, { useState } from "react";
 import logo from "../../assets/logo.png";
 import { APP_NAME } from "../../util/constants";
+import PaymentForm from "../PaymentForm";
 
 import "./Invoice.css";
+import "react-credit-cards/es/styles-compiled.css";
+import { getDateStringFromTimestamp } from "../../util";
 
 const IMG_WIDTH = "200px";
 
@@ -16,17 +19,27 @@ function Invoice({
   description,
   units,
   callbackUrl,
+  destination,
   ref,
+  createdAt,
   pay,
   imgData,
   logoUrl,
   payId,
   properties,
 }) {
+  const [circleModal, setCircleModal] = useState();
+  const [buyerAddress, setBuyerAddress] = useState();
+  const [payData, setPayData] = useState({
+    cvc: "",
+    expiry: "",
+    focus: "",
+    name: "",
+    number: "",
+  });
+
   const invoiceNumber = payId || DEMO_NUMBER;
-
   const items = (properties || {}).items || [];
-
   const total = items
     .map((item) => item.cost)
     .reduce(function (a, b) {
@@ -36,118 +49,160 @@ function Invoice({
   const currency = units || "Eth";
 
   return (
-    <div class="invoice-box" ref={ref}>
+    <div className="invoice-box" ref={ref}>
       {/* <p>
         <b>Transaction Complete! Please print this page.</b>
       </p> */}
-      <table cellpadding="0" cellspacing="0">
-        <tr class="top">
-          <td colspan="2">
-            <table>
-              <tr>
-                <td class="title">
-                  <img
-                    src={logoUrl || logo}
-                    style={{ width: "100%", maxWidth: IMG_WIDTH }}
-                  />
-                </td>
+      <table cellPadding="0" cellSpacing="0">
+        <tbody>
+          <tr className="top">
+            <td colSpan="2">
+              <table>
+                <tr>
+                  <td className="title">
+                    <img
+                      src={logoUrl || logo}
+                      style={{ width: "100%", maxWidth: IMG_WIDTH }}
+                    />
+                  </td>
 
-                <td>
-                  NFT Voucher #: {invoiceNumber}
-                  <br />
-                  Created: {new Date().toISOString().slice(0, 10)}
-                  <br />
-                  Active Until:{" "}
-                  {new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
-                    .toISOString()
-                    .slice(0, 10)}
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-
-        <tr class="information">
-          <td colspan="2">
-            <table>
-              <tr>
-                <td>
-                  Fulfilled by {APP_NAME}, Inc.
-                  <br />
-                  {name}
-                  {/* 12345 Sunny Road */}
-                  <br />
-                  {description}
-                  {/* Sunnyville, CA 12345 */}
-                </td>
-
-                <td>
-                  Acme Corp.
-                  <br />
-                  John Doe
-                  <br />
-                  {APP_NAME}@gmail.com
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-
-        <tr class="heading">
-          <td>Payment Method</td>
-
-          <td>Check #</td>
-        </tr>
-
-        <tr class="details">
-          <td>{currency}</td>
-
-          <td>
-            {/* {payId} */}
-            {total} {currency}
-          </td>
-        </tr>
-
-        <tr class="heading">
-          <td>Item</td>
-
-          <td>Price</td>
-        </tr>
-
-        {items.map(({ name: itemName, cost }, i) => (
-          <tr class="item" key={i}>
-            <td>{itemName}</td>
-
-            <td>
-              {cost} {}
+                  <td>
+                    NFT Voucher #:&nbsp;
+                    <Tooltip
+                      placement="top"
+                      title={<span>{invoiceNumber}</span>}
+                    >
+                      {invoiceNumber.slice(0, 16)}
+                    </Tooltip>
+                    <br />
+                    Created:{" "}
+                    {getDateStringFromTimestamp(createdAt || Date.now())}
+                    <br />
+                    Active Until:{" "}
+                    {getDateStringFromTimestamp(
+                      Date.now() + 30 * 24 * 60 * 60 * 1000
+                    )}
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
-        ))}
 
-        <tr class="total">
-          <td>
-            {imgData && <img className="img-invoice" src={imgData} />}
+          <tr className="information">
+            <td colSpan="2">
+              <table>
+                <tr>
+                  <td>
+                    Fulfilled by {APP_NAME}, Inc.
+                    <br />
+                    {name}
+                    {/* 12345 Sunny Road */}
+                    <br />
+                    {description}
+                    {/* Sunnyville, CA 12345 */}
+                  </td>
 
-            {/* <a href={url} target="_blank">
+                  <td>
+                    Acme Corp.
+                    <br />
+                    John Doe
+                    <br />
+                    {APP_NAME}@gmail.com
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr className="heading">
+            <td>Payment Method</td>
+
+            <td>Check #</td>
+          </tr>
+
+          <tr className="details">
+            <td>{currency}</td>
+
+            <td>
+              {/* {payId} */}
+              {total} {currency}
+            </td>
+          </tr>
+
+          <tr className="heading">
+            <td>Item</td>
+
+            <td>Price</td>
+          </tr>
+
+          {items.map(({ name: itemName, cost }, i) => (
+            <tr className="item" key={i}>
+              <td>{itemName}</td>
+
+              <td>
+                {cost} {}
+              </td>
+            </tr>
+          ))}
+
+          <tr className="total">
+            <td>
+              {imgData && <img className="img-invoice" src={imgData} />}
+
+              {/* <a href={url} target="_blank">
               View NFT
             </a> */}
-            {pay && (
-              <Button
-                type="primary"
-                size="large"
-                className="standard-button"
-                onClick={pay}
-              >
-                Complete Payment
-              </Button>
-            )}
-          </td>
+              <br />
+              <br />
+              <span>
+                <Button
+                  type="primary"
+                  size="large"
+                  className="standard-button"
+                  onClick={() => pay({}, false)}
+                >
+                  Pay with wallet
+                </Button>
+                &nbsp;
+                <Button
+                  //   type="primary"
+                  size="large"
+                  className="standard-button"
+                  onClick={() => setCircleModal(true)}
+                >
+                  Pay with Credit Card
+                </Button>
+              </span>
+            </td>
 
-          <td>
-            Total: {total} {currency}
-          </td>
-        </tr>
+            <td>
+              Total: {total} {currency}
+            </td>
+          </tr>
+        </tbody>
       </table>
+
+      <Modal
+        title="Pay invoice with credit card"
+        visible={circleModal}
+        onOk={() => pay({ buyerAddress }, true)}
+        onCancel={() => setCircleModal(false)}
+      >
+        <PaymentForm
+          amount={`${total} ${currency}`}
+          data={payData}
+          setData={setPayData}
+          address={destination || "XXX"}
+        />
+        <p>Enter the address to receive your NFT receipt</p>
+
+        <Input
+          value={buyerAddress}
+          prefix="NFT address:"
+          onChange={(e) => setBuyerAddress(e.target.value)}
+          placeholder="Address"
+        />
+      </Modal>
     </div>
   );
 }

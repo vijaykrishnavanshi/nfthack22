@@ -1,7 +1,8 @@
 import { File } from "https://cdn.jsdelivr.net/npm/nft.storage/dist/bundle.esm.min.js";
-import { ipfsUrl } from ".";
+import { createJsonFile, ipfsUrl } from ".";
 import { mintNFT } from "./stor";
 import axios from "axios";
+import { createPayment } from "./circle";
 
 export const EXAMPLE_FORM = {
   callbackUrl: "",
@@ -10,24 +11,18 @@ export const EXAMPLE_FORM = {
   destination: "",
   itemCost: 1000,
   description: "",
-  logo: "",
+  logoUrl: "",
   units: "USDC",
 };
 
 export const createInvoice = async (payload) => {
-  const { title, destination, callbackUrl, items, description, cost } = payload;
-  const properties = {
-    destination,
-    callbackUrl,
-    items,
-    cost,
-  };
-  const st = JSON.stringify(payload);
-  const blob = new Blob([st], { type: "application/json" });
-  const fileData = new File([blob], "invoice.json");
-
-  const res = await mintNFT(title, description, fileData, properties);
-
+  const fileData = createJsonFile(payload, "invoice.json");
+  const res = await mintNFT(
+    payload.title,
+    payload.description,
+    fileData,
+    payload
+  );
   return res;
 };
 
@@ -36,4 +31,8 @@ export const getInvoice = (cid) => {
   return axios.get(url);
 };
 
-export const payInvoice = async ({}) => {};
+export const payInvoice = async (data, useCC) => {
+  if (useCC) {
+    return createPayment(data);
+  }
+};

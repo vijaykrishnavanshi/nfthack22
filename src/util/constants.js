@@ -7,7 +7,13 @@ console.log("hashes", NFT_KEY, COVALENT_KEY, NFT_PORT_KEY);
 export const APP_NAME = "NFTpay";
 export const APP_DESC = "NFT-backed invoices";
 
+export const CIRCLE_BASE_URL =
+  process.env.REACT_APP_CIRCLE_URL || "https://api-sandbox.circle.com";
+
 export const CHAIN_OPTIONS = {
-  1: { name: "Ethereum", url: "https://etherscan.io/tx/" },
-  42: { name: "Kovan", url: "https://kovan.etherscan.io/tx/" },
+  1: { name: "ethereum", url: "https://etherscan.io/tx/", id: 1 },
+  42: { name: "kovan", url: "https://kovan.etherscan.io/tx/", id:42 },
+  4: { name: "rinkeby", url: "https://rinkeby.etherscan.io/tx/", id:4 },
 };
+
+export const ACTIVE_CHAIN_ID = CHAIN_OPTIONS['4'];
