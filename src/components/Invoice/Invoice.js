@@ -7,6 +7,7 @@ import PaymentForm from "../PaymentForm";
 import "./Invoice.css";
 import "react-credit-cards/es/styles-compiled.css";
 import { getDateStringFromTimestamp } from "../../util";
+import { createFlow, RATE_MAP, RINKEBY_USDC } from "../../util/superfluid";
 
 const IMG_WIDTH = "200px";
 
@@ -176,6 +177,24 @@ function Invoice({
                   Pay with Credit Card
                 </Button>
                 &nbsp;
+                {recurring && (
+                  <span>
+                    <a
+                      href="#"
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        await createFlow(
+                          destination,
+                          total / RATE_MAP["month"],
+                          RINKEBY_USDC
+                        );
+                        pay({ buyerAddress, stream: true }, false);
+                      }}
+                    >
+                      Create payment flow
+                    </a>
+                  </span>
+                )}
               </span>
             </td>
 

@@ -51,7 +51,9 @@ After declaring the above environment variables, use the below command to start 
 
 `yarn && yarn start`
 
-###
+### Homepage
+
+<img src="./img/home.png" width=800/>
 
 ### Deployment
 
@@ -67,18 +69,21 @@ Use cid: bafyreifxtpw5sgtpvpc5r5ltyhhxtgikxcwyba7rx2wayvvgb7gh7bfhva
 <!--
 
 ### Sponsors:
-Circle - payments USDC
-IPFS/Filecoin - hosting
-Unlock - payment wall
-Covalent - hostin
-Opensea? (might not qualify)
-Moralis? - payments
+IPFS/Filecoin - invoice and metadata hosting
+Circle - payments USDC (one time credit card facilitated payment)
+Unlock - payment wall (one time eth payment)
+Covalent - history
+Superfluid - recurring payments
+NFTport - receipts
 
 Demo flow:
 * Stripe page - invoicing requires account and accepting cash payment
-NFTpay
-* Receipts without any centralized party
-* No need for hosting
+NFTpay.
+* Receipts without any centralized party.
+* No need for hosting.
+* Flexible payments - let the user use the option they are comfortable with whether that be a credit card, or from their metamask or other ethereum wallet.
+* History page - not supported on rinkeby. But for mainnet can query arbitrary addresses to get a table format of transactions/receipts associated with that address.
+* Github page
 
 
 -->

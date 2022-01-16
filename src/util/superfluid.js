@@ -1,6 +1,5 @@
 import SuperfluidSDK from "@superfluid-finance/js-sdk";
 import { Web3Provider } from "@ethersproject/providers";
-import { ETH_TOKEN } from "./infura";
 
 const SECONDS_PER_DAY = 3600 * 24;
 
@@ -10,10 +9,11 @@ export const RATE_MAP = {
   month: SECONDS_PER_DAY * 30,
 };
 
-const KOVAN_ETHX = "0xdd5462a7db7856c9128bc77bd65c2919ee23c6e1";
+// TODO: replace with map
+export const RINKEBY_USDC = "0xbe49ac1EadAc65dccf204D4Df81d650B50122aB2";
 
-export const createFlow = async (recipient, token, flowRate) => {
-  token = token || KOVAN_ETHX;
+export const createFlow = async (recipient, flowRate, token) => {
+  token = token || RINKEBY_USDC;
   flowRate = flowRate || 385802469135802;
   console.log("createFlow", recipient, token, flowRate);
   const walletAddress = await window.ethereum.request({
@@ -45,7 +45,7 @@ export const createFlow = async (recipient, token, flowRate) => {
 };
 
 export const getDetails = async (token) => {
-  token = token || KOVAN_ETHX;
+  token = token || RINKEBY_USDC;
   const walletAddress = await window.ethereum.request({
     method: "eth_requestAccounts",
     params: [
@@ -70,7 +70,7 @@ export const getDetails = async (token) => {
   return details;
 };
 
-export const cancelFlow = async (recipient) => {
+export const cancelFlow = async (recipient, token) => {
   const walletAddress = await window.ethereum.request({
     method: "eth_requestAccounts",
     params: [
@@ -86,7 +86,7 @@ export const cancelFlow = async (recipient) => {
   await sf.initialize();
   const userAccount = sf.user({
     address: walletAddress[0],
-    token: KOVAN_ETHX,
+    token,
   });
 
   await userAccount.flow({

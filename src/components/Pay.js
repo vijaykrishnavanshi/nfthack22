@@ -53,6 +53,7 @@ function Pay({ match }) {
     const { buyerAddress } = payData;
 
     if (useCC) {
+      // Credit card
       setLoading(true);
       try {
         res = await payInvoice(buyerAddress, useCC);
@@ -62,7 +63,8 @@ function Pay({ match }) {
       } finally {
         setLoading(false);
       }
-    } else {
+    } else if (!payData.stream) {
+      // If crypto method, but not using paystream.
       const config = {
         pessimistic: true,
         locks: {
