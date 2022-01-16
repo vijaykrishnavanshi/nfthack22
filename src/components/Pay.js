@@ -68,12 +68,13 @@ function Pay({ match }) {
         locks: {
           "0x43090E9e8ec709811C777ffa03111Bd1Bb0ca65c": {
             network: 4,
-            name: data.title,
+            name: data.properties.title,
           },
         },
         icon: "https://i.ibb.co/YR4nzVS/favicon.png",
+        // icon: "https://i.ibb.co/ZdR7Rm6/Screen-Shot-2022-01-15-at-11-45-39-PM.png",
         callToAction: {
-          default: `${data.title}. ${data.description}. Complete payment for this invoice below:`,
+          default: `${data.properties.title}. ${data.description}. Complete payment for this invoice below:`,
         },
         metadataInputs: [
           {
