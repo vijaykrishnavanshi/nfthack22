@@ -130,7 +130,7 @@ function Pay({ match }) {
   if (loading) {
     return (
       <div className="container">
-        <Spin size="large" />;
+        <Spin size="large" />
       </div>
     );
   }
