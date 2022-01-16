@@ -4,9 +4,11 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@superfluid-finance/js-sdk": "^0.5.8",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "@truffle/contract": "^4.4.4",
     "antd": "^4.18.3",
     "axios": "^0.24.0",
     "nft.storage": "^5.2.0",

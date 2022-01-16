@@ -12,6 +12,7 @@ export const EXAMPLE_FORM = {
   itemCost: 1000,
   description: "",
   logoUrl: "",
+  recurring: false,
   units: "USDC",
 };
 

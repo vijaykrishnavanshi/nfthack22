@@ -28,10 +28,11 @@ Built for the NFThack2022 hackathon.
 
 - Unlock Protocol: Creates an ethereum based paywall where a user chooses an Ethereum wallet as the checkout method of choice.
 - Circle: Enables settling transactions in USDC using credit card directly from the invoice checkout screen.
+- Superfluid: Continuous stream invoice support (usable for subscriptions/licensing). Option to set up a superfluid flow on the invoice checkout page.
 
 #### NFT Receipts
 
-- Covalent: Transaction history / lookup. After transactions are completed, Covalent can be used for destination address lookup to view the history on a particular network in a user-friendly table format in-app
+- Covalent: Transaction history / lookup. After transactions are completed, Covalent can be used for destination address lookup to view the history on a particular network in a user-friendly table format in-app.
 - NFTPort: Creation of the NFT payment receipts for arbitrary addresses and blockchains (Filecoin could have potentially been used as well).
 
 ### Running the project

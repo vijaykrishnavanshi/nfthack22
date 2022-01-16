@@ -55,6 +55,7 @@ function CreateInvoice(props) {
       createdAt: new Date().getTime(),
       destination: data.destination,
       url: data.url,
+      recurring: data.recurring,
     };
 
     try {
@@ -145,6 +146,15 @@ function CreateInvoice(props) {
               prefix="Callback url:"
               onChange={(e) => updateData("url", e.target.value)}
             />
+            <br />
+
+            <Radio.Group
+              onChange={(e) => updateData("recurring", e.target.value)}
+              value={data.recurring}
+            >
+              <Radio value={false}>One-time</Radio>
+              <Radio value={true}>Monthly recurring</Radio>
+            </Radio.Group>
 
             <br />
             <br />

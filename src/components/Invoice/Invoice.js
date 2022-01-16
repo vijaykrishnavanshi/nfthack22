@@ -25,6 +25,7 @@ function Invoice({
   pay,
   imgData,
   logoUrl,
+  recurring,
   payId,
   properties,
 }) {
@@ -47,6 +48,8 @@ function Invoice({
     }, 0);
 
   const currency = units || "Eth";
+
+  const amountString = `${total} ${currency}${recurring ? " monthly" : ""}`;
 
   return (
     <div className="invoice-box" ref={ref}>
@@ -125,7 +128,7 @@ function Invoice({
 
             <td>
               {/* {payId} */}
-              {total} {currency}
+              {amountString}
             </td>
           </tr>
 
@@ -172,12 +175,11 @@ function Invoice({
                 >
                   Pay with Credit Card
                 </Button>
+                &nbsp;
               </span>
             </td>
 
-            <td>
-              Total: {total} {currency}
-            </td>
+            <td>Total: {amountString}</td>
           </tr>
         </tbody>
       </table>
@@ -189,7 +191,7 @@ function Invoice({
         onCancel={() => setCircleModal(false)}
       >
         <PaymentForm
-          amount={`${total} ${currency}`}
+          amount={amountString}
           data={payData}
           setData={setPayData}
           address={destination || "XXX"}
