@@ -17,8 +17,12 @@ export const createJsonFile = (payload, fileName) => {
   return fileData;
 };
 
-export const getDateStringFromTimestamp = (ts) => {
-  return new Date(ts).toLocaleDateString();
+export const getDateStringFromTimestamp = (ts, showTime) => {
+  const d = new Date(ts);
+  if (showTime) {
+    return `${d.toLocaleDateString} ${d.toLocaleTimeString}`;
+  }
+  return d.toLocaleDateString();
 };
 
 export const col = (k) => ({

@@ -6,18 +6,47 @@ NFTpay
 
 ###
 
-Your own hosted invoices - represented as NFT's.
+Make your own blockchain-hosted invoices - hosted for free on IPFS and fulfilled by cryptocurrency.
 
-No fees.
+Built for the NFThack2022 hackathon.
+
+### Benefits
+
+- Free hosting for invoice checkout pages.
+- No need to open a partnership with an external vendor for managing invoices, or paying vendor-specific fees such as those from Stripe.
+- Receipts auto-hosted as NFT's. No chance of losing an attachment or document showing the time and receipt of purchase. Receipt and time of purchase forever retained on ethereum's network.
+- Payments facillated and settled on crypto. Use either credit card or your ERC20 token of choice to settle the payment.
+- On successful payment callback, receipts represented as NFTs are delivered by the app to both the buyer and seller wallets after the transaction.
+
+### Technologies used
+
+#### Invoice hosting/generation
+
+- IPFS/Filecoin: Hosting of the invoice metadata on IPFS with it's own NFT contract. Invoice metadata saved in a static IPFS-served json file.
+
+#### Payments/Checkout
+
+- Unlock Protocol: Creates an ethereum based paywall where a user chooses an Ethereum wallet as the checkout method of choice.
+- Circle: Enables settling transactions in USDC using credit card directly from the invoice checkout screen.
+
+#### NFT Receipts
+
+- Covalent: Transaction history / lookup. After transactions are completed, Covalent can be used for destination address lookup to view the history on a particular network in a user-friendly table format in-app
+- NFTPort: Creation of the NFT payment receipts for arbitrary addresses and blockchains (Filecoin could have potentially been used as well).
 
 ### Running the project
 
-NFTpay requires the following environment variables.
+<b>This project is a hackathon prototype and would require additional work to be production ready (i.e. around some of the final checkout flows).</b>
+
+To run/demo the project locally, NFTpay requires the following environment variables.
 
 <pre>
-REACT_APP_NFT_KEY={YOUR_NFT_STORAGE_KEY}
-REACT_APP_NFT_KEY={YOUR_NFT_STORAGE_KEY}
+    REACT_APP_NFT_KEY={YOUR_NFT_STORAGE_KEY} # NFT storage key for IPFS.
+    REACT_APP_COVALENT_KEY={YOUR_COVALENT_API_KEY} # Covalent key for the history page.
+    REACT_APP_NFT_PORT_KEY={YOUR_NFT_PORT_API_KEY} # NFT port api key for receipt creation.
 </pre>
+
+After declaring the above environment variables, use the below command to start the project:
 
 `yarn && yarn start`
 

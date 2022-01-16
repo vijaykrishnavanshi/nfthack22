@@ -75,10 +75,10 @@ function Invoice({
                       {invoiceNumber.slice(0, 16)}
                     </Tooltip>
                     <br />
-                    Created:{" "}
-                    {getDateStringFromTimestamp(createdAt || Date.now())}
+                    Created:&nbsp;
+                    {getDateStringFromTimestamp(createdAt || Date.now(), true)}
                     <br />
-                    Active Until:{" "}
+                    Active Until:&nbsp;
                     {getDateStringFromTimestamp(
                       Date.now() + 30 * 24 * 60 * 60 * 1000
                     )}
